@@ -1,4 +1,9 @@
-# Reproducible Research: Peer Assessment 1
+---
+title: "Reproducible Research: Peer Assessment 1"
+output: 
+  html_document:
+    keep_md: true
+---
 
 
 ## Loading and preprocessing the data
@@ -14,25 +19,24 @@ Processing data: Not necessary.
 
 ## What is mean total number of steps taken per day?
   
-Questions:  
   
-1. Calculate the total number of steps taken per day  
+Calculate the total number of steps taken per day  
   
 
 ```r
 numStepsPerDate = aggregate(steps ~ date, data = rawdata, sum)
 ```
 
-2. Make a histogram of the total number of steps taken each day  
+Make a histogram of the total number of steps taken each day  
 
 
 ```r
 hist(numStepsPerDate$steps,main = "Total number of steps taken each day",xlab="Steps")
 ```
 
-![](PA1_template_files/figure-html/make histogram-1.png) 
+![plot of chunk make histogram](figure/make histogram-1.png) 
 
-3. Calculate and report the mean and median of the total number of steps taken per day  
+Calculate and report the mean and median of the total number of steps taken per day  
 
 
 
@@ -51,10 +55,7 @@ hist(numStepsPerDate$steps,main = "Total number of steps taken each day",xlab="S
 
 ## What is the average daily activity pattern?
 
-Questions:
-
-
-1. Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
+Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 
 
 ```r
@@ -63,9 +64,9 @@ plot(steps ~ interval, data = meanStepsPerInterval, type = "l")
 title(main = "Mean steps per 5-minute interval")
 ```
 
-![](PA1_template_files/figure-html/plot mean steps per interval-1.png) 
+![plot of chunk plot mean steps per interval](figure/plot mean steps per interval-1.png) 
 
-2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
+Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
 
 ```r
@@ -82,9 +83,7 @@ filtered$interval
 
 ## Imputing missing values
 
-Questions:
-
-1. Calculate and report the total number of missing values in the dataset
+Calculate and report the total number of missing values in the dataset
 
 
 
@@ -94,11 +93,11 @@ missingvalues = sum(is.na(rawdata))
 
 *The total number of missing values in the dataset is:* 2304. 
 
-2. Devise a strategy for filling in all of the missing values in the dataset.
+Devise a strategy for filling in all of the missing values in the dataset.
 
-Strategy: Replace missing values in the column "steps" with its mean on that interval
+*Strategy: Replace missing values in the column "steps" with its mean on that interval*
 
-3. Create a new dataset that is equal to the original dataset but with the missing data filled in.
+Create a new dataset that is equal to the original dataset but with the missing data filled in.
 
 
 ```r
@@ -128,7 +127,7 @@ for (i in 1:nrow(withoutNA)) {
 
  2304 *missing values replaced*.
 
-4. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
+Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
 
 
 ```r
@@ -136,13 +135,11 @@ numStepsPerDate_withoutNAs = aggregate(steps ~ date, data = withoutNA, sum)
 hist(numStepsPerDate_withoutNAs$steps,main = "Total number of steps taken each day (version 2)")
 ```
 
-![](PA1_template_files/figure-html/make histogram of the dataset without NAs-1.png) 
+![plot of chunk make histogram of the dataset without NAs](figure/make histogram of the dataset without NAs-1.png) 
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-Questions:
-
-1. Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
+Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
 
 *The following code will install package "lubridate" if not found
 
@@ -163,7 +160,7 @@ if (!require(lubridate)){
 withoutNA$dateAsDay = factor(ifelse(wday(rawdates)%%6 == 0, "weekend", "weekday"))
 ```
 
-2. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
+Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
 
 *The following code will install package "lattice" if not found
 
@@ -184,4 +181,4 @@ if (!require(lattice)){
 xyplot(steps ~ interval | dateAsDay, data = meanStepsPerInterval2, aspect = 1/2, type = "l",main = "Mean steps per 5-minute interval")
 ```
 
-![](PA1_template_files/figure-html/plot using factor variable weekday/weekend-1.png) 
+![plot of chunk plot using factor variable weekday/weekend](figure/plot using factor variable weekday/weekend-1.png) 
