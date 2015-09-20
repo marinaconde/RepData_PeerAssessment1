@@ -152,5 +152,5 @@ if (!require(lattice)){
   install.packages("lattice")
   library(lattice)
 }
-xyplot(steps ~ interval | dateAsDay, data = meanStepsPerInterval2, type = "l",main = "Mean steps per 5-minute interval")
+xyplot(steps ~ interval | dateAsDay, data = meanStepsPerInterval2, aspect = 1/2, type = "l",main = "Mean steps per 5-minute interval")
 ```

@@ -1,9 +1,4 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 
 ## Loading and preprocessing the data
@@ -35,7 +30,7 @@ numStepsPerDate = aggregate(steps ~ date, data = rawdata, sum)
 hist(numStepsPerDate$steps,main = "Total number of steps taken each day",xlab="Steps")
 ```
 
-![plot of chunk make histogram](figure/make histogram-1.png) 
+![](PA1_template_files/figure-html/make histogram-1.png) 
 
 3. Calculate and report the mean and median of the total number of steps taken per day  
 
@@ -68,7 +63,7 @@ plot(steps ~ interval, data = meanStepsPerInterval, type = "l")
 title(main = "Mean steps per 5-minute interval")
 ```
 
-![plot of chunk plot mean steps per interval](figure/plot mean steps per interval-1.png) 
+![](PA1_template_files/figure-html/plot mean steps per interval-1.png) 
 
 2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
@@ -141,7 +136,7 @@ numStepsPerDate_withoutNAs = aggregate(steps ~ date, data = withoutNA, sum)
 hist(numStepsPerDate_withoutNAs$steps,main = "Total number of steps taken each day (version 2)")
 ```
 
-![plot of chunk make histogram of the dataset without NAs](figure/make histogram of the dataset without NAs-1.png) 
+![](PA1_template_files/figure-html/make histogram of the dataset without NAs-1.png) 
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
@@ -158,6 +153,13 @@ if (!require(lubridate)){
   install.packages("lubridate")
   library(lubridate)
 }
+```
+
+```
+## Loading required package: lubridate
+```
+
+```r
 withoutNA$dateAsDay = factor(ifelse(wday(rawdates)%%6 == 0, "weekend", "weekday"))
 ```
 
@@ -172,7 +174,14 @@ if (!require(lattice)){
   install.packages("lattice")
   library(lattice)
 }
-xyplot(steps ~ interval | dateAsDay, data = meanStepsPerInterval2, type = "l",main = "Mean steps per 5-minute interval")
 ```
 
-![plot of chunk plot using factor variable weekday/weekend](figure/plot using factor variable weekday/weekend-1.png) 
+```
+## Loading required package: lattice
+```
+
+```r
+xyplot(steps ~ interval | dateAsDay, data = meanStepsPerInterval2, aspect = 1/2, type = "l",main = "Mean steps per 5-minute interval")
+```
+
+![](PA1_template_files/figure-html/plot using factor variable weekday/weekend-1.png) 
